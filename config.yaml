@@ -1,0 +1,63 @@
+# ═══════════════════════════════════════════════════════════════════════
+# Queue Monitoring System — Configuration
+# ═══════════════════════════════════════════════════════════════════════
+#
+# To use a phone as a CCTV camera:
+#   1. Install "IP Webcam" (Android) or "DroidCam" / "Camo" (iOS)
+#   2. Start the camera server on the phone
+#   3. Use the HTTP or RTSP URL as the source below
+#
+# For a local laptop webcam, use source: 0 (integer device index)
+# ═══════════════════════════════════════════════════════════════════════
+
+model:
+  weights: "yolov8n.pt"        # yolov8n / yolov8s / yolov8m / yolov8l / yolov8x
+  confidence: 0.50             # minimum detection confidence
+  tracker: "bytetrack.yaml"    # built-in Ultralytics tracker config
+
+stream:
+  fps: 20                      # target stream FPS
+  jpeg_quality: 75             # MJPEG compression quality (0-100)
+
+# SQLite database for persisting completed queue sessions
+db_path: "queue_history.db"
+
+# ── Camera Definitions ────────────────────────────────────────────────
+# Each camera has:
+#   id      — unique slug (used in API URLs)
+#   name    — human-readable label shown on dashboard
+#   source  — RTSP URL, HTTP MJPEG URL, or integer for local webcam
+#   zone    — list of [x, y] polygon vertices defining the queue area
+#             leave empty [] to auto-generate a centre-screen rectangle
+#
+# Phone camera URL examples:
+#   IP Webcam (Android):  "http://192.168.1.10:8080/video"
+#   DroidCam:             "http://192.168.1.10:4747/video"
+#   RTSP generic:         "rtsp://user:pass@192.168.1.10:554/stream"
+# ──────────────────────────────────────────────────────────────────────
+
+cameras:
+  - id: "cam-main"
+    name: "Main Camera"
+    source: 0                  # local webcam for testing
+    zone: []                   # auto-generate centre polygon
+
+  # Uncomment and edit to add phone cameras:
+  #
+  - id: "cam-lobby"
+    name: "Lobby Camera"
+    source: "http://192.168.1.4:8080/video"
+    zone:
+      - [200, 100]
+      - [500, 100]
+      - [500, 400]
+      - [200, 400]
+  #
+  # - id: "cam-counter"
+  #   name: "Counter Camera"
+  #   source: "http://192.168.1.11:8080/video"
+  #   zone:
+  #     - [150, 80]
+  #     - [480, 80]
+  #     - [480, 350]
+  #     - [150, 350]

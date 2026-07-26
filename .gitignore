@@ -1,0 +1,35 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# SQLite databases
+*.sqlite
+*.sqlite3
+*.db
+
+# Model weights
+*.pt
+*.pth
+
+# Videos and Demos
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Autoclaude/IDE caches
+.autoclaude/
+.claude_agent_farm_backups/
+.heartbeats/
+.ruff_cache/
+.DS_Store
